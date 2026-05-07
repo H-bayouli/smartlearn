@@ -37,14 +37,7 @@ const DocumentDetailPage = () =>{
   const getPdfUrl = () => {
     if (!document?.data?.filePath) return null;
 
-    const filePath = document.data.filePath;
-
-    if(filePath.startsWith('http://') || filePath.startsWith('https://')) {
-      return filePath;
-    }
-
-    const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000';
-    return `${baseUrl}${filePath.startsWith('/') ? '' : '/'}${filePath}`;
+    return document.data.filePath;
   };
 
   const renderContent = () => {
@@ -56,6 +49,8 @@ const DocumentDetailPage = () =>{
     }
 
     const pdfUrl = getPdfUrl();
+
+    console.log(document);
   
     return (
       <div className="bg-white border border-gray-300 rounded-lg overflow-hidden shadow-sm">
@@ -76,7 +71,7 @@ const DocumentDetailPage = () =>{
             src={pdfUrl}
             className="w-full h-[70vh] bg-white rounded border border-gray-300"
             title="PDF Viewer"
-            frameBorder="0"
+            //frameBorder="0"
             style={{
               colorScheme: 'light'
             }}
@@ -103,11 +98,11 @@ const DocumentDetailPage = () =>{
   }
 
   const tabs = [
-    { name: 'Content', label: 'Content', conetent: renderContent()},
-    { name: 'Chat', label: 'Chat', conetent: renderChat()},
-    { name: 'AI Actions', label: 'AI Actions', conetent: renderAIActions()},
-    { name: 'Flashcards', label: 'Flashcards', conetent: renderFlashcardsTab()},
-    { name: 'Quizzes', label: 'Quizzes', conetent: renderQuizzesTab()}
+    { name: 'Content', label: 'Content', content: renderContent()},
+    { name: 'Chat', label: 'Chat', content: renderChat()},
+    { name: 'AI Actions', label: 'AI Actions', content: renderAIActions()},
+    { name: 'Flashcards', label: 'Flashcards', content: renderFlashcardsTab()},
+    { name: 'Quizzes', label: 'Quizzes', content: renderQuizzesTab()}
   ];
 
   if(loading){

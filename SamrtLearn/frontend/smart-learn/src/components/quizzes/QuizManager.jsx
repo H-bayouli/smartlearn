@@ -8,6 +8,7 @@ import Spinner from "../common/Spinner";
 import Button from "../common/Button";
 import Modal from "../common/Modal";
 import QuizCard from './QuizCard';
+import EmptyState from "../common/EmptyState";
 
 const QuizManager = ({documentId}) => {
     const [quizzes, setQuizzes] =useState([]);

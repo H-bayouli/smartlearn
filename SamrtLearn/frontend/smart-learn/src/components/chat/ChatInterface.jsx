@@ -1,4 +1,4 @@
-import React, { sueState, useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import { Send, MessageSquare, Sparkles } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import aiService from '../../services/aiService';
@@ -72,7 +72,7 @@ const ChatInterface = () => {
     };
 
     const renderMessage = (message, index) => {
-        const isUser = msg.rle === 'user';
+        const isUser = message.role === 'user';
         return (
             <div key={index} className={`flex items-start gap-3 my-4 ${isUser ? 'justify-end' : ''}`}>
                 {!isUser && (
@@ -83,19 +83,19 @@ const ChatInterface = () => {
                 <div className={`max-w-lg p-4 rounded-2xl shadow-sm ${
                     isUser
                         ? 'bg-linear-to-br from-emerald-500 to-teal-500 text-white rounded-br-md'
-                        : 'bgwhite border border-slate-200/60 text-slate-800 rounded-bl-md'
+                        : 'bg-white border border-slate-200/60 text-slate-800 rounded-bl-md'
                 }`}>
                     {isUser ? (
-                        <p className='text-sm loading-relaxed'>{msg.content}</p>
+                        <p className='text-sm loading-relaxed'>{message.content}</p>
                     ): (
                         <div className='prose prose-sm max-w-none prose-slate'>
-                            <MarkdownRenderer content={msg.content} />
+                            <MarkdownRenderer content={message.content} />
                         </div>
                     )}
                 </div>
                 {isUser && (
                     <div className='w-9 h-9 rounded-xl bg-linear-to-br from-slate-200 to-slate-300 flex items-center justify-center text-slate-700 font-semibold text-sm shrink-0 shadow-sm'>
-                        {user?.username?.charAt(0).toUppercse() || 'U'}
+                        {user?.username?.charAt(0).toUpperCase() || 'U'}
                     </div>
                 )}
             </div>
@@ -104,7 +104,7 @@ const ChatInterface = () => {
 
     if(initialLoading){
         return (
-            <div className='flex flex-col h-[70vh] bg-white/80 backdorp-blur-xl border border-slate-200/60 rounded-2xl items-center justify-center shadow-xl shadow-slate-200/50'>
+            <div className='flex flex-col h-[70vh] bg-white/80 backdrop-blur-xl border border-slate-200/60 rounded-2xl items-center justify-center shadow-xl shadow-slate-200/50'>
                 <div className='w-14 h-14 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 flex items-center justify-center mb-4'>
                     <MessageSquare className='w-7 h-7 text-emerald-600' strokeWidth={2} />
                 </div>

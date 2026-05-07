@@ -220,7 +220,7 @@ const FlashcardManager = ({documentId}) => {
                     No Flashcards Yet
                 </h3>
                 <p className='text-sm text-slate-500 mb-8 text-center max--w-sm'>
-                    Generate flashcars from your document to start learning and
+                    Generate flashcards from your document to start learning and
                     reinforce your knowledge.
                 </p>
                 <button 

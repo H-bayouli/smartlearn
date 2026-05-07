@@ -28,7 +28,7 @@ const generateSummary = async (documentId) => {
     }
 };
 
-const chat = async (documentId, options) => {
+const chat = async (documentId, message) => {
     try {
         const response = await axiosInstance.post(API_PATHS.AI.CHAT, {documentId, question: message});
         return response.data;
@@ -48,7 +48,7 @@ const explainConcept = async (documentId, concept) => {
 
 const getChatHistory = async (documentId) => {
     try {
-        const response = await axiosInstance.post(API_PATHS.AI.GET_CHAT_HISTORY, {documentId});
+        const response = await axiosInstance.get(API_PATHS.AI.GET_CHAT_HISTORY, { params: { documentId } });
         return response.data;
     } catch(error) {
         throw error.response?.data || { message: 'Failed to fetch chat history' };

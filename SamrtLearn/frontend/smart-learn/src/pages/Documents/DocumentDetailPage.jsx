@@ -7,6 +7,9 @@ import { ArrowLeft, ExternalLink } from "lucide-react";
 import PageHeader from "../../components/common/PageHeader"; 
 import Tabs from "../../components/common/Tabs";
 import AIActions from "../../components/ai/AIActions";
+import ChatInterface from "../../components/chat/ChatInterface";
+import FlashcardManager from "../../components/flashcards/FlashcardManager";
+import QuizManager from "../../components/quizzes/QuizManager";
 
 const DocumentDetailPage = () =>{
 

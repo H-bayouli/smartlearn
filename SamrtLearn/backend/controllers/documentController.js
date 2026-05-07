@@ -34,7 +34,7 @@ export const uploadDocument =async (req, res, next) => {
         const document = await Document.create({
             userId: req.user._id,
             title,
-            fileNmae: req.file.originalname,
+            fileName: req.file.originalname,
             filePath: fileUrl,
             fileSize: req.file.size,
             status: 'processing'
@@ -103,8 +103,8 @@ export const getDocuments =async (req, res, next) => {
             },
             {
                 $addFields: {
-                    flashcardCount: {$size: '$flashcardSets'},
-                    quizCount: {$size: '$quizzes'}
+                    flashcardCount: {$size: { $ifNull: ['$flashcardSets', []] }},
+                    quizCount: {$size: { $ifNull: ['$quizzes', []] } }
                 }
             },
             {
@@ -133,7 +133,7 @@ export const getDocuments =async (req, res, next) => {
 export const getDocument =async (req, res, next) => {
     try {
         const document = await Document.findOne({
-            çid: req.params.id,
+            _id: req.params.id,
             userId: req.user._id
         });
 

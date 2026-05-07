@@ -130,7 +130,7 @@ const DocumentListPage = () =>{
             </p>
             <button
              onClick={()=> setIsUploadModalOpen(true)}
-             className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-emrald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]"
+             className="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-sm font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 active:scale-[0.98]"
             >
               <Plus className="w-4 h-4" strokeWidth={2.5} />
               Upload Document

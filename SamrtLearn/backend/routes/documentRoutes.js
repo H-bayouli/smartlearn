@@ -13,6 +13,7 @@ const router = express.Router();
 
 router.use(protect);
 
+/*
 router.post('/upload', (req, res, next) => {
   upload.single('file')(req, res, function (err) {
     if (err) {
@@ -24,6 +25,14 @@ router.post('/upload', (req, res, next) => {
     }
     next();
   });
+}, uploadDocument);
+*/
+router.post('/upload', (req, res, next) => {
+  console.log("HEADERS:", req.headers['content-type']);
+  next();
+}, upload.single('file'), (req, res, next) => {
+  console.log("FILE AFTER MULTER:", req.file);
+  next();
 }, uploadDocument);
 router.get('/documents', getDocuments);
 router.get('/:id', getDocument);

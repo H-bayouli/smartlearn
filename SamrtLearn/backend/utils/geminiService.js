@@ -142,7 +142,7 @@ export const generateQuiz = async (text, numQuestions = 5) => {
  * @returns {Promise<string>}
  */
 export const generateSummary = async (text) => {
-    const prompt= `Provide a concise summary of the foolowing text, highlighting the key concepts, main ideas, and important points.';
+    const prompt= `Provide a concise summary of the foolowing text, highlighting the key concepts, main ideas, and important points.
     keep the summary clear and structured.
 
     Text:
@@ -169,9 +169,12 @@ export const generateSummary = async (text) => {
  */
 
 export const chatWithContent = async (question, chunks) => {
+    if (!chunks || chunks.length === 0) {
+        throw new Error('No document chunks found');
+    }
     const context = chunks.map((c, i) => `[chunks ${i+1}]\n${c.content}`).join('\n\n');
     
-    const prompt = `Besed on the following context from a document, Analyse the content and aswer the user's questions
+    const prompt = `Based on the following context from a document, analyse the content and answer the user's questions
     If the answer is not in the context, say so.
     
     Context:

@@ -41,7 +41,7 @@ const QuizManager = ({documentId}) => {
     }, [documentId]);
 
     const handleGenerateQuiz = async (e) => {
-        e.preventdefault();
+        e.preventDefault();
         setGenerating(true);
         try{
             await aiService.generateQuiz(documentId, { numQuestions });
@@ -92,9 +92,9 @@ const QuizManager = ({documentId}) => {
 
         return (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {quizzes.map((quiz) => {
+                {quizzes.map((quiz) => (
                     <QuizCard key={quiz._id} quiz={quiz} onDelete={handleDeleteRequest} />
-                })}
+                ))}
             </div>
         )
     };

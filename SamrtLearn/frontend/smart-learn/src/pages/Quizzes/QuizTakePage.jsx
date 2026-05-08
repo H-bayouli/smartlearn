@@ -25,6 +25,8 @@ const QuizTakePage = () =>{
       } catch(error) {
         toast.error('Failed to fetch quiz.');
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -57,11 +59,11 @@ const QuizTakePage = () =>{
         const question = quiz.questions.find(q => q._id === questionId);
         const questionIndex = quiz.questions.findIndex(q=> q._id === questionId);
         const optionIndex = selectedAnswers[questionId];
-        const selectedAnswer = question.option[optionIndex];
+        const selectedAnswer = question.options[optionIndex];
         return { questionIndex, selectedAnswer };
       });
 
-      await quitService.submitQuiz(quizId, formattedAnswers);
+      await quizService.submitQuiz(quizId, formattedAnswers);
       toast.success('Quiz submitted succefully!');
       navigate(`/quizzes/${quizId}/results`);
     } catch(error){
@@ -91,7 +93,7 @@ const QuizTakePage = () =>{
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
   const isAnswered = selectedAnswers.hasOwnProperty(currentQuestion._id);
-  const answerCount = Object.keys[selectedAnswers].length;
+  const answerCount = Object.keys(selectedAnswers).length;
   return (
     <div className="max-w-4xl mx-auto">
       <PageHeader title={quiz.title || 'Take Quiz'} />

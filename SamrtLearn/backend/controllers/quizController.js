@@ -7,7 +7,9 @@ export const getQuizzes = async (req, res, next) => {
             documentId: req.params.documentId
         })
             .populate('documentId', 'title fileName')
-            .sort({ createAt: -1});
+            .sort({ createdAt: -1});
+
+        console.log("Quizzes:", quizzes);
         
         res.status(200).json({
             success: true,
@@ -85,7 +87,7 @@ export const submitQuiz = async (req, res, next) => {
             const { questionIndex, selectedAnswer} = answer;
 
             if(questionIndex < quiz.questions.length)  {
-                const question = quiz.questions(questionIndex);
+                const question = quiz.questions[questionIndex];
                 const isCorrect = selectedAnswer === question.correctAnswer;
 
                 if(isCorrect) correctCount++;
@@ -127,7 +129,7 @@ export const submitQuiz = async (req, res, next) => {
 export const getQuizResults = async (req, res, next) => {
     try {
         const quiz = await Quiz.findOne({
-            _Id: req.params._id,
+            _id: req.params._id,
             userId: req.user._id
         }).populate('documentId', 'title fileName');
 
@@ -155,7 +157,7 @@ export const getQuizResults = async (req, res, next) => {
                 question: question.question,
                 options: question.options,
                 correctAnswer: question.correctAnswer,
-                selectedAnswer: userAnswer?.isCorrect || false,
+                selectedAnswer: userAnswer?.selectedAnswer || null,
                 explanation: question.explanation
             };
         });
@@ -166,7 +168,7 @@ export const getQuizResults = async (req, res, next) => {
                 quiz: {
                     id: quiz._id,
                     title: quiz.title,
-                    document: quiz.docmentId,
+                    document: quiz.documentId,
                     score: quiz.score,
                     totalQuestions: quiz.totalQuestions,
                     completedAt: quiz.completedAt
@@ -182,7 +184,7 @@ export const getQuizResults = async (req, res, next) => {
 export const deleteQuiz = async (req, res, next) => {
     try {
         const quiz = await Quiz.findOne({
-            _Id: req.params._id,
+            _id: req.params.id,
             userId: req.user._id
         }).populate('documentId', 'title fileName');
 

@@ -49,7 +49,7 @@ const QuizResultPage = () =>{
 
   const { data: { quiz, results: detailedResults }} = results;
   const score = quiz.score;
-  const total = detailedResults.length;
+  const totalQuestions = detailedResults.length;
   const correctAnswers = detailedResults.filter(r => r.isCorrect).length;
   const incorrectAnswers = totalQuestions - correctAnswers;
 
@@ -83,7 +83,7 @@ const QuizResultPage = () =>{
 
       <div className="bg-white/80 backdrop-blur-xl border-2 border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50 p-8 mb-8">
         <div className="text-center space-y-6">
-          <div className="incline-flex items-center justify-center w-15 h-15 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 shadow-lg shadow-emerald-500/25">
+          <div className="inline-flex items-center justify-center w-15 h-15 rounded-2xl bg-linear-to-br from-emerald-100 to-teal-100 shadow-lg shadow-emerald-500/25">
             <Trophy className="w-7 h-7 text-emerald-600" strokeWidth={2} />
           </div>
 
@@ -123,14 +123,14 @@ const QuizResultPage = () =>{
       </div>
 
       <div className="space-y-6">
-        <div className="flex-items-center gap-3 mb-2">
+        <div className="flex items-center gap-3 mb-2">
           <BookOpen className="w-5 h-5 text-slate-600" strokeWidth={2} />
           <h3 className="text-lg font-semibold text-slate-900">Detailed Review</h3>
         </div>
 
         {detailedResults.map((result, index) => {
           const userAnswerIndex = result.options.findIndex(opt => opt === result.selectedAnswer);
-          const correctAnswerIndex = result.correctAnswer.startWith('0')
+          const correctAnswerIndex = result.correctAnswer.startsWith('0')
             ? parseInt(result.correctAnswer.substring(1)) -1
             : result.options.findIndex(opt => opt === result.correctAnswer);
           const isCorrect = result.isCorrect;
@@ -165,7 +165,7 @@ const QuizResultPage = () =>{
               </div>
 
               <div className="space-y-3 mb-4">
-                {result.otpions.map((option, optIndex) => {
+                {result.options.map((option, optIndex) => {
                   const isCorrectOption = optIndex === correctAnswerIndex;
                   const isUserAnswer = optIndex === userAnswerIndex;
                   const isWrongAnswer = isUserAnswer && !isCorrect;
@@ -173,7 +173,7 @@ const QuizResultPage = () =>{
                   return (
                     <div
                       key={optIndex}
-                      className={`relative px-4 py-3 rounded-lg border-2 transtion-all duration-200 ${
+                      className={`relative px-4 py-3 rounded-lg border-2 transition-all duration-200 ${
                         isCorrectOption
                           ? 'bg-emerald-50 border-emerald-300 shadow-lg shadow-emerald-500/30'
                           : isWrongAnswer 
@@ -235,7 +235,7 @@ const QuizResultPage = () =>{
         <Link to={`/documents/${quiz.document._id}`}>
           <button className="group relative px-8 h-12 bg-linear-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold text-sm rounded-xl transition-all duration-200 shadow-lg shadow-emerald-500/25 active:scale-95 overflow-hidden">
             <span className="relative z-10 flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4 groupèhover:-translate-x-1 transition-transform duration-200" strokeWidth={2.5} />
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" strokeWidth={2.5} />
               Return to Document 
             </span>
             <div className="absolute inset-0 bg-linear-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />

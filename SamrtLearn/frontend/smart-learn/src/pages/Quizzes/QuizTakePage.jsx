@@ -55,18 +55,30 @@ const QuizTakePage = () =>{
   const handleSubmitQuiz = async () => {
     setSubmitting(true);
     try{
-      const formattedAnswers = Object.keys(selectedAnswers).map(questionId => {
-        const question = quiz.questions.find(q => q._id === questionId);
-        const questionIndex = quiz.questions.findIndex(q=> q._id === questionId);
-        const optionIndex = selectedAnswers[questionId];
-        const selectedAnswer = question.options[optionIndex];
-        return { questionIndex, selectedAnswer };
+      const formattedAnswers = Object.keys(selectedAnswers).map((questionId) => {
+          const question = quiz.questions.find(
+              (q) => q._id.toString() === questionId
+          );
+
+          const questionIndex = quiz.questions.findIndex(
+              (q) => q._id.toString() === questionId
+          );
+
+          const optionIndex = selectedAnswers[questionId];
+
+          const selectedAnswer = question.options[optionIndex];
+
+          return {
+              questionIndex,
+              selectedAnswer
+          };
       });
 
       await quizService.submitQuiz(quizId, formattedAnswers);
       toast.success('Quiz submitted succefully!');
       navigate(`/quizzes/${quizId}/results`);
     } catch(error){
+      console.error("SUBMIT ERROR:", error);
       toast.error(error.message || 'Failed to sumbit quiz.');
     } finally {
       setSubmitting(false);
@@ -92,7 +104,7 @@ const QuizTakePage = () =>{
   }
 
   const currentQuestion = quiz.questions[currentQuestionIndex];
-  const isAnswered = selectedAnswers.hasOwnProperty(currentQuestion._id);
+  //const isAnswered = selectedAnswers.hasOwnProperty(currentQuestion._id);
   const answerCount = Object.keys(selectedAnswers).length;
   return (
     <div className="max-w-4xl mx-auto">
@@ -161,7 +173,7 @@ const QuizTakePage = () =>{
                 </div>
 
                 <span className={`ml-4 text-sm font-medium transition-colors duration-200 ${
-                  isSelected ? 'text-emerald-900' : 'text-slate-700 goup-hover:text-slate-900'
+                  isSelected ? 'text-emerald-900' : 'text-slate-700 group-hover:text-slate-900'
                 }`}>
                   {option}
                 </span>
@@ -201,6 +213,7 @@ const QuizTakePage = () =>{
               ) : (
                 <>
                   <CheckCircle2 className="" strokeWidth={2.5} />
+                  Submit Quiz
                 </>
               )}
             </span>

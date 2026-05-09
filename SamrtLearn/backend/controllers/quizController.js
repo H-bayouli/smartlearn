@@ -55,7 +55,7 @@ export const submitQuiz = async (req, res, next) => {
             return res.status(400).json({
                 success: false,
                 error: 'Please provide answers array',
-                statusCode: 404
+                statusCode: 400
             });
         }
 
@@ -122,6 +122,7 @@ export const submitQuiz = async (req, res, next) => {
             message: 'Quiz submitted successfully'
         });
     }catch(error){
+        console.error("SUBMIT ERROR:", error);
         next(error);
     }
 }
@@ -129,7 +130,7 @@ export const submitQuiz = async (req, res, next) => {
 export const getQuizResults = async (req, res, next) => {
     try {
         const quiz = await Quiz.findOne({
-            _id: req.params._id,
+            _id: req.params.id,
             userId: req.user._id
         }).populate('documentId', 'title fileName');
 
@@ -158,6 +159,7 @@ export const getQuizResults = async (req, res, next) => {
                 options: question.options,
                 correctAnswer: question.correctAnswer,
                 selectedAnswer: userAnswer?.selectedAnswer || null,
+                isCorrect: userAnswer?.isCorrect || false,
                 explanation: question.explanation
             };
         });
